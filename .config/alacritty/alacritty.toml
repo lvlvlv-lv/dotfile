@@ -1,0 +1,16 @@
+# import = ["/Users/whlv/.config/alacritty/themes/onedark.toml"]
+
+live_config_reload = true
+
+[font.normal]
+family = "MesloLGS NF"
+
+[font]
+size = 20
+
+[[mouse.bindings]]
+action = "Paste"
+mouse = "Right"
+
+[window]
+opacity = 0.8
