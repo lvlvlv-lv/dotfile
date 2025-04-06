@@ -1,3 +1,4 @@
+
 (setq custom-file "~/.emacs.custom.el")
 (package-initialize)
 
@@ -7,7 +8,6 @@
 
 ;; Appearance
 (add-to-list 'default-frame-alist `(font . "Iosevka-24"))
-
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
@@ -44,8 +44,8 @@
 (rc/require 'magit)
 (require 'magit)
 
+;; IDE code reading config
 (rc/require 'lsp-mode 'yasnippet 'lsp-treemacs 'helm-lsp 'projectile 'hydra 'flycheck 'company 'avy 'which-key 'helm-xref 'dap-mode)
-
 ;; sample `helm' configuration use https://github.com/emacs-helm/helm/ for details
 ;; (helm-mode) ;; imcompatible whith ido-everywhere 
 (require 'helm-xref)
@@ -68,5 +68,10 @@
   (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)
   (require 'dap-cpptools)
   (yas-global-mode))
+
+;; Expand region increases the selected region by semantic units. Just keep
+;; pressing the key until it selects what you want.
+(require 'expand-region)
+(global-set-key (kbd "C-=") 'er/expand-region)
 
 (load-file custom-file)
