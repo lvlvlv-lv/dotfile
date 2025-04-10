@@ -1,7 +1,22 @@
 ;; proxy
-(setenv "http_proxy" "http://127.0.0.1:7890")
-(setenv "https_proxy" "http://127.0.0.1:7890")
-(setenv "all_proxy" "socks5://127.0.0.1:7890")
+(defvar my-proxy nil)
+
+(defun open-proxy ()
+  (interactive)
+  (setq my-proxy "127.0.0.1:7890")
+  (setenv "http_proxy" "http://127.0.0.1:7890")
+  (setenv "https_proxy" "http://127.0.0.1:7890")
+  (setenv "all_proxy" "socks5://127.0.0.1:7890")
+  (message "Current proxy is \"%s\"" my-proxy))
+
+(defun close-proxy ()
+  (interactive)
+  (setq my-proxy nil)
+  (setenv "http_proxy" "")
+  (setenv "https_proxy" "")
+  (setenv "all_proxy" "")
+  (message "No proxy"))
+
 
 (setq custom-file "~/.emacs.custom.el")
 (package-initialize)
