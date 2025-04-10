@@ -1,3 +1,7 @@
+;; proxy
+(setenv "http_proxy" "http://127.0.0.1:7890")
+(setenv "https_proxy" "http://127.0.0.1:7890")
+(setenv "all_proxy" "socks5://127.0.0.1:7890")
 
 (setq custom-file "~/.emacs.custom.el")
 (package-initialize)
@@ -73,5 +77,26 @@
 ;; pressing the key until it selects what you want.
 (require 'expand-region)
 (global-set-key (kbd "C-=") 'er/expand-region)
+
+;; indent style
+(setq c-default-style
+      '((java-mode . "java")
+        (awk-mode . "awk")
+        (c-mode . "cc-mode")
+        (other . "gnu")))
+;; org-mode
+;; Disable the splash screen (to enable it agin, replace the t with 0)
+(setq inhibit-splash-screen t)
+
+;; Enable transient mark mode
+(transient-mark-mode 1)
+
+;;;;Org mode configuration
+;; Enable Org mode
+(rc/require 'org)
+(require 'org)
+;; Make Org mode work with files ending in .org
+;; (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+;; The above is the default in recent emacsen
 
 (load-file custom-file)
