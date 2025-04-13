@@ -1,12 +1,12 @@
-# import = ["/Users/whlv/.config/alacritty/themes/onedark.toml"]
+import = ["/Users/whlv/.config/alacritty/themes/gruber_darker.toml"]
 
 live_config_reload = true
 
 [font.normal]
-family = "MesloLGS NF"
+family = "Iosevka"
 
 [font]
-size = 20
+size = 24
 
 [[mouse.bindings]]
 action = "Paste"
