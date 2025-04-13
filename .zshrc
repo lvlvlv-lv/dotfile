@@ -140,6 +140,3 @@ unset key
 
 # my config file
 [[ -f ~/.zshprofile ]] && source ~/.zshprofile
-
-# To customize prompt, run `p10k configure` or edit ~/dotfile/.p10k.zsh.
-[[ ! -f ~/dotfile/.p10k.zsh ]] || source ~/dotfile/.p10k.zsh
