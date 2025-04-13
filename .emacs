@@ -90,6 +90,7 @@
 
 ;; Expand region increases the selected region by semantic units. Just keep
 ;; pressing the key until it selects what you want.
+(rc/require 'expand-region)
 (require 'expand-region)
 (global-set-key (kbd "C-=") 'er/expand-region)
 

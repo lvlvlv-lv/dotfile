@@ -14,7 +14,7 @@
    '(ag clojure-mode cmake-mode d-mode dap-mode dash-functional
         dockerfile-mode elpy expand-region glsl-mode go-mode
         graphviz-dot-mode gruber-darker-theme haskell-mode helm-lsp
-        helm-xref ido-completing-read+ jinja2-mode kotlin-mode
+        helm-xref htmlize ido-completing-read+ jinja2-mode kotlin-mode
         lsp-mode lsp-treemacs lua-mode magit markdown-mode move-text
         multiple-cursors nginx-mode nim-mode nix-mode org-cliplink
         paredit php-mode projectile purescript-mode qml-mode
