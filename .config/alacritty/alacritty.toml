@@ -1,0 +1,17 @@
+[font.normal]
+family = "Iosevka"
+
+[font]
+size = 20
+
+[[mouse.bindings]]
+action = "Paste"
+mouse = "Right"
+
+[window]
+opacity = 0.8
+
+[general]
+
+live_config_reload = true
+import = ["/Users/whlv/.config/alacritty/themes/gruber_darker.toml"]
