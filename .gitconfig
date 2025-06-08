@@ -1,3 +1,7 @@
 [user]
 	email = wynnhowe.lv@gmail.com
 	name = lvlvlv
+[push]
+	default = upstream
+[pull]
+	rebase = true
