@@ -1,0 +1,25 @@
+import = [
+"/Users/whlv/.config/alacritty/themes/gruber_darker.toml",
+]
+
+live_config_reload = true
+
+[font.normal]
+family = "Iosevka"
+
+[font]
+size = 24
+
+[[mouse.bindings]]
+action = "Paste"
+mouse = "Right"
+
+[window]
+opacity = 0.8
+option_as_alt = "Both"
+startup_mode = "Maximized"
+
+[keyboard]
+bindings = [
+  { key = "Slash", mods = "Control", chars = "\u001f" },
+]
