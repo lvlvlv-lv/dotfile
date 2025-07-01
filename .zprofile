@@ -37,8 +37,14 @@ PATH=$PATH:/Library/Frameworks/Python.framework/Versions/2.7/lib/mypaint/numpy
 export PATH
 
 # install openjdk@21
-export JAVA_HOME=$HOME/OpenJDK/jdk-21.0.1.jdk/Contents/Home
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk-21.jdk/Contents/Home
 export PATH=$JAVA_HOME/bin:$PATH
+
+# install bazel
+export PATH=$HOME/opt/bazel/output:$PATH
+
+# install doom emacs
+export PATH=$HOME/.config/emacs/bin:$PATH
 
 # alias
 alias emacs="emacs -nw"
