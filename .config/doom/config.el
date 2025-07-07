@@ -8,9 +8,6 @@
 ;; (setq user-full-name "John Doe"
 ;;       user-mail-address "john@doe.com")
 
-;; Global config
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
-
 ;; Doom exposes five (optional) variables for controlling fonts in Doom:
 ;;
 ;; - `doom-font' -- the primary font to use
@@ -75,3 +72,51 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+;; Global config
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->")         'mc/mark-next-like-this)
+(global-set-key (kbd "C-<")         'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C->")     'mc/mark-all-like-this)
+(global-set-key (kbd "C-;")         'mc/skip-to-next-like-this)
+(global-set-key (kbd "C-\"")        'mc/skip-to-previous-like-this)
+
+;; c-mode hook
+(add-hook 'c-mode-hook
+          (lambda ()
+            (setq c-basic-offset 4)
+            (setq tab-width 4)))
+
+;; duplicate one line
+(defun rc/duplicate-line ()
+  "Duplicate current line"
+  (interactive)
+  (let ((column (- (point) (point-at-bol)))
+        (line (let ((s (thing-at-point 'line t)))
+                (if s (string-remove-suffix "\n" s) ""))))
+    (move-end-of-line 1)
+    (newline)
+    (insert line)
+    (move-beginning-of-line 1)
+    (forward-char column)))
+(global-set-key (kbd "C-,") 'rc/duplicate-line)
+
+;; move-text
+(global-set-key (kbd "M-n") 'move-text-down)
+(global-set-key (kbd "M-p") 'move-text-up)
+
+;; insert timestamp example: 2025-07-05 20:13:11
+(defun rc/insert-timestamp ()
+  (interactive)
+  (insert (format-time-string "%Y-%m-%d %H:%M:%S")))
+(global-set-key (kbd "C-c p d") 'rc/insert-timestamp)
+
+
+;; symbols-outline
+;; (global-set-key (kbd "C-c i") 'symbols-outline-show)
+(with-eval-after-load 'symbols-outline
+  ;; Use lsp-mode or eglot as backend
+  (setq symbols-outline-fetch-fn #'symbols-outline-lsp-fetch)
+  (setq symbols-outline-window-position 'left)
+  (symbols-outline-follow-mode))
