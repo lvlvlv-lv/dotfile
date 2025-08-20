@@ -1,0 +1,27 @@
+# proxy config
+export hsa_proxy=0
+function proxy_toggle() {
+    if [ "$has_proxy" -eq 0 ]
+    then
+        export http_proxy=http://127.0.0.1:7890 
+        export https_proxy=http://127.0.0.1:7890 
+        export all_proxy=socks5://127.0.0.1:7890 
+        has_proxy=1
+        echo "[proxy toggle info] open proxy"
+    else
+        unset http_proxy
+        unset https_proxy
+        unset all_proxy
+        has_proxy=0
+        echo "[proxy toggle info] close proxy"
+    fi
+}
+
+function proxy_test() {
+    echo "[proxy test info] curl -I www.google.com..."
+    curl -I www.google.com
+    echo "[proxy test info] curl -I www.google.com end"
+}
+
+# input method config
+
