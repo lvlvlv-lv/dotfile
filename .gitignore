@@ -5,3 +5,5 @@
 /eln-cache/
 /.smex-items
 .gitignore
+/.cache/
+/transient/
