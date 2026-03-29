@@ -8,3 +8,6 @@
 /.cache/
 /transient/
 /ido.last
+/.lsp-session-v1
+/projectile-bookmarks.eld
+/tramp
