@@ -103,14 +103,12 @@
     (interactive)
     (find-file "~/.emacs.d/init.el"))
 
-  :bind (
-	 ("s-e" . open-emacs-config)
-	 ;; 替代ctrl+alt+space
-	 ("C-s-SPC" . mark-sexp)
-	 ;; M-&打开Async shell command, M-*打开Compile command
-	 ("M-*" . compile)
-	 )
-  )
+  :bind
+  (("s-e" . open-emacs-config)
+   ;; 替代ctrl+alt+space
+   ("C-s-SPC" . mark-sexp)
+   ;; M-&打开Async shell command, M-*打开Compile command
+   ("M-*" . compile)))
 
 ;; 主题
 (use-package gruber-darker-theme
@@ -138,7 +136,6 @@
   :bind ("C-x g" . magit-status))
 
 ;; 交互式补全
-;; 基础 Ido 配置
 (use-package ido
   :ensure nil  ;; ido 是内置的
   :custom
@@ -179,8 +176,7 @@
              (if (bound-and-true-p ido-ubiquitous-mode) "on" "off")
 	     (if (bound-and-true-p flx-ido-mode) "on" "off")
 	     (if (bound-and-true-p ido-grid-mode) "on" "off")
-	     (if (bound-and-true-p ido-vertical-mode) "on" "off")
-	     ))
+	     (if (bound-and-true-p ido-vertical-mode) "on" "off")))
 
   ;; 启用 ido 模式
   (ido-mode t)
@@ -197,11 +193,8 @@
    ;; 虚拟 buffer（灰色）
    '(ido-virtual ((t (:foreground "#5c6370")))))
   :bind
-  (
-   ;; 查看ido状态
-   ("C-c i d" . my/ido-debug)
-   )
-  )
+  (;; 查看ido状态
+   ("C-c i d" . my/ido-debug)))
 
 ;; 让所有 completing-read 都使用 Ido
 (use-package ido-completing-read+
@@ -238,25 +231,6 @@
   ;; 提高匹配分数阈值，使结果更精确
   (setq flx-ido-threshold 0.6))
 
-;; 增强 M-x 体验
-(use-package smex
-  :ensure t
-  :after ido
-  :bind (("M-x" . smex)
-         ("M-X" . smex-major-mode-commands)
-         ("C-c C-c M-x" . smex))
-  :custom
-  (smex-save-file (expand-file-name ".smex-items" user-emacs-directory))
-  :config
-  (smex-initialize))
-
-;; 让 ido 补全列表网格显示
-(use-package ido-grid-mode
-  :ensure t
-  :after ido
-  :config
-  (ido-grid-mode 1))
-
 ;; 让 ido 补全列表竖直显示
 (use-package ido-vertical-mode
   :ensure t
@@ -270,11 +244,16 @@
   (ido-vertical-buffer-display-height 0.3) ;; 补全窗口高度比例
   
   :config
-  ;; (ido-vertical-mode t)
-  )
+  (ido-vertical-mode t))
+
+(use-package swiper
+  ;; 快捷搜索
+  :ensure nil
+  :bind
+  (("C-s" . swiper)
+   ("C-r" . swiper)))
 
 ;; lsp
-;; 安装并配置 lsp-mode 核心
 (use-package lsp-mode
   :ensure t                           ;; 确保安装
   :init
@@ -282,11 +261,51 @@
   (setq lsp-keymap-prefix "C-c l")
 
   :hook
-  (
-   ;; 在以下编程语言的主模式下自动启动 lsp-mode
-   (c-mode . lsp-deferred)
-   )
+  (;; 在以下编程语言的主模式下自动启动 lsp-mode
+   (c-mode . lsp-deferred))
   :commands (lsp lsp-deferred)        ;; 延迟加载，提升启动速度
   :config
   ;; 可选：集成 which-key，在你输入前缀键后显示可用的命令
   (lsp-enable-which-key-integration t))
+
+;;  Ivy 核心（只给 counsel-projectile 使用）
+(use-package ivy
+  :ensure t
+  :config
+  ;; 不影响全局 ido，只临时供 counsel 使用
+  (setq ivy-isearch nil))
+
+;; Counsel（保留你所有快捷键 + fd 后端）
+(use-package counsel
+  :ensure t
+  :bind
+  (("M-x" . counsel-M-x)
+   ("C-c f" . counsel-fzf)
+   ("C-c r" . counsel-rg)
+   ("C-c a" . counsel-ag)
+   ("C-c g" . counsel-git))
+  :config
+  (counsel-mode 1)
+  ;; fzf 用 fd 做后端
+  (setq counsel-fzf-cmd "fd --type f --hidden --follow --exclude .git --color never '%s'"))
+
+;; Projectile + fd 极速索引
+(use-package projectile
+  :ensure t
+  :config
+  (when (executable-find "fd")
+    (setq projectile-generic-command "fd . -0 --type f --color=never")
+    (setq projectile-git-command "fd . -0 --type f --color=never"))
+  (setq projectile-indexing-method 'alien)
+  (setq projectile-enable-caching t)
+  (projectile-mode 1)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+
+;; counsel-projectile（项目操作使用 ivy）
+(use-package counsel-projectile
+  :ensure t
+  :after (ivy counsel projectile)
+  :config
+  (counsel-projectile-mode 1)
+  ;; 重点：仅 projectile 使用 ivy 补全，不影响全局 ido
+  (setq projectile-completion-system 'ivy))
