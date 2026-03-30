@@ -85,7 +85,7 @@
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
   ;; 设置字体名称和大小
-  (set-face-attribute 'default nil :family "Monospace" :height 120)
+  (set-face-attribute 'default nil :family "Monospace" :height 240)
 
   ;; 加载customs.el文件的配置
   ;; (setq custom-file (expand-file-name "customs.el" user-emacs-directory))
@@ -135,124 +135,6 @@
   :after transient  ; 确保在 transient 之后加载
   :bind ("C-x g" . magit-status))
 
-;; 交互式补全
-(use-package ido
-  :ensure nil  ;; ido 是内置的
-  :custom
-  ;; 启用模糊匹配 - 可以在文件名任意位置输入字符匹配
-  (ido-enable-flex-matching t)
-  ;; 在所有可能的地方使用 ido（如 M-x，但会被 smex 增强）
-  (ido-everywhere t)
-  ;; 智能获取当前光标处的文件名/路径作为初始输入
-  (ido-use-filename-at-point 'guess)
-  ;; 支持 URL 作为文件名
-  (ido-use-url-at-point t)
-  ;; 显示隐藏文件（点开头的文件）
-  (ido-enable-dot-prefix t)
-  ;; 支持 TRAMP 远程文件编辑
-  (ido-enable-tramp-completion t)
-  ;; 新建 buffer 时的行为：'prompt 表示询问
-  (ido-create-new-buffer 'prompt)
-  ;; 显示匹配项的数量
-  (ido-max-prospects 10)
-  ;; 使用 faces 高亮匹配字符
-  (ido-use-faces t)
-  ;; 不保留最近访问过的文件的顺序（可选，如果不需要可以注释掉）
-  ;; (ido-record-commands nil)
-  ;; 忽略这些文件（不显示在补全列表中）
-  (ido-ignore-buffers 
-   '("\\` " "^\*Mess" "^\*Back" "^\*Quail" "^\*Completions" "^\*Ido" "^\*trace" 
-     "^\*compilation" "^\*GTAGS" "^session\\*" "^\*EMMS"))
-  (ido-ignore-files
-   '("\\`\\.?#" "\\`\\.\\'" "\\`\\.\\.\\'" "\\`#.*#" "^\\.DS_Store" "^\\.git"))
-  
-  :config
-  ;; 自定义函数：方便调试 ido
-  (defun my/ido-debug ()
-    "显示当前 ido 状态，用于调试"
-    (interactive)
-    (message "ido-mode: %s, ido-ubiquitous-mode: %s, flx-ido-mode: %s, ido-grid-mode: %s, ido-vertical-mode: %s"
-             (if (bound-and-true-p ido-mode) "on" "off")
-             (if (bound-and-true-p ido-ubiquitous-mode) "on" "off")
-	     (if (bound-and-true-p flx-ido-mode) "on" "off")
-	     (if (bound-and-true-p ido-grid-mode) "on" "off")
-	     (if (bound-and-true-p ido-vertical-mode) "on" "off")))
-
-  ;; 启用 ido 模式
-  (ido-mode t)
-  ;; 配置 ido 的 faces，让匹配的字符更明显
-  (custom-set-faces
-   ;; 当前选中的项（粗体 + 蓝色）
-   '(ido-first-match ((t (:weight bold :foreground "#61afef" :underline nil))))
-   ;; 唯一匹配项（绿色）
-   '(ido-only-match ((t (:foreground "#98c379"))))
-   ;; 子目录（黄色）
-   '(ido-subdir ((t (:foreground "#e5c07b"))))
-   ;; 匹配到的字符（红色背景高亮）
-   '(ido-match ((t (:background "#e06c75" :foreground "#282c34"))))
-   ;; 虚拟 buffer（灰色）
-   '(ido-virtual ((t (:foreground "#5c6370")))))
-  :bind
-  (;; 查看ido状态
-   ("C-c i d" . my/ido-debug)))
-
-;; 让所有 completing-read 都使用 Ido
-(use-package ido-completing-read+
-  :ensure t
-  :after ido
-  :custom
-  ;; 如果遇到某些命令表现不正常，可以在这里排除
-  (ido-ubiquitous-command-exceptions
-   '("find-file"  ;; 这些命令已经由 ido 本身处理
-     "switch-to-buffer"
-     "dired"
-     "compile"))
-  
-  ;; 对于某些命令，如果 ido 不太适合，可以回退到原始 completing-read
-  (ido-cr+-fallback-command-alist
-   '(("org-tags-view" . nil)
-     ("org-set-tags" . nil)))
-  
-  :config
-  ;; 确保 ido-ubiquitous 在所有可能的上下文中启用
-  (ido-ubiquitous-mode t))
-
-;; 增强的模糊匹配
-(use-package flx-ido
-  :ensure t
-  :after ido
-  :config
-  ;; 启用 flx 增强的模糊匹配算法
-  (flx-ido-mode t)
-  
-  ;; 覆盖默认的 flex 匹配，使用 flx 的更智能算法
-  (setq ido-enable-flex-matching t)  ;; flx-ido 会接管这个
-  
-  ;; 提高匹配分数阈值，使结果更精确
-  (setq flx-ido-threshold 0.6))
-
-;; 让 ido 补全列表竖直显示
-(use-package ido-vertical-mode
-  :ensure t
-  :after ido
-  :custom
-  ;; 定义上下键：使用 C-n/C-p 在列表中导航
-  (ido-vertical-define-keys 'C-n-and-C-p-only)
-  
-  ;; 竖直显示模式下的其他设置
-  (ido-vertical-show-count t)           ;; 显示匹配项数量
-  (ido-vertical-buffer-display-height 0.3) ;; 补全窗口高度比例
-  
-  :config
-  (ido-vertical-mode t))
-
-(use-package swiper
-  ;; 快捷搜索
-  :ensure nil
-  :bind
-  (("C-s" . swiper)
-   ("C-r" . swiper)))
-
 ;; lsp
 (use-package lsp-mode
   :ensure t                           ;; 确保安装
@@ -268,16 +150,37 @@
   ;; 可选：集成 which-key，在你输入前缀键后显示可用的命令
   (lsp-enable-which-key-integration t))
 
-;;  Ivy 核心（只给 counsel-projectile 使用）
 (use-package ivy
   :ensure t
+  :hook (after-init . ivy-mode)  ; 启动自动开启
   :config
-  ;; 不影响全局 ido，只临时供 counsel 使用
-  (setq ivy-isearch nil))
+  (setq ivy-use-virtual-buffers t    ; 显示最近打开的文件
+        ivy-count-format "(%d/%d) "   ; 显示匹配数量
+        ivy-initial-inputs-alist nil  ; 不自动填充输入
+        ivy-wrap t                    ; 列表循环
+        ivy-enable-advanced-buffer-information t)
+  :bind
+  (("M-x" . counsel-M-x)
+   ("C-s" . swiper)
+   ("C-r" . swiper)
+   ("C-x C-f" . counsel-find-file)
+   ("C-x b" . ivy-switch-buffer)))
 
-;; Counsel（保留你所有快捷键 + fd 后端）
+(use-package ivy-rich
+  :ensure t
+  :after ivy
+  :config
+  (ivy-rich-mode 1))
+
+(use-package all-the-icons-ivy-rich
+  :ensure t
+  :after ivy-rich
+  :config
+  (all-the-icons-ivy-rich-mode 1))
+
 (use-package counsel
   :ensure t
+  :after ivy
   :bind
   (("M-x" . counsel-M-x)
    ("C-c f" . counsel-fzf)
@@ -286,10 +189,8 @@
    ("C-c g" . counsel-git))
   :config
   (counsel-mode 1)
-  ;; fzf 用 fd 做后端
   (setq counsel-fzf-cmd "fd --type f --hidden --follow --exclude .git --color never '%s'"))
 
-;; Projectile + fd 极速索引
 (use-package projectile
   :ensure t
   :config
@@ -301,11 +202,9 @@
   (projectile-mode 1)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
-;; counsel-projectile（项目操作使用 ivy）
 (use-package counsel-projectile
   :ensure t
   :after (ivy counsel projectile)
   :config
-  (counsel-projectile-mode 1)
-  ;; 重点：仅 projectile 使用 ivy 补全，不影响全局 ido
-  (setq projectile-completion-system 'ivy))
+  (counsel-projectile-mode 1))
+
