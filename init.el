@@ -1,8 +1,7 @@
 ;; 设置代理
-;; export https_proxy=http://127.0.0.1:7897 http_proxy=http://127.0.0.1:7897 all_proxy=socks5://127.0.0.1:7897
-(setenv "http_proxy" "http://127.0.0.1:7897")
-(setenv "https_proxy" "http://127.0.0.1:7897")
-(setenv "all_proxy" "socks5://127.0.0.1:7897")
+(setenv "http_proxy" "http://127.0.0.1:6984")
+(setenv "https_proxy" "http://127.0.0.1:6984")
+(setenv "all_proxy" "socks5://127.0.0.1:6984")
 
 ;; 下载elpaca
 (defvar elpaca-installer-version 0.12)
