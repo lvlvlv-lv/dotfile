@@ -208,3 +208,16 @@
   :config
   (counsel-projectile-mode 1))
 
+(use-package exec-path-from-shell
+  :ensure t
+  :if (or (daemonp) (memq window-system '(mac ns x)))
+  :custom
+  (exec-path-from-shell-shell-name "zsh")
+  ;; (exec-path-from-shell-arguments '("-l"))
+  (exec-path-from-shell-check-startup-files t)
+  ;; (exec-path-from-shell-variables '("PATH" "MANPATH" "GOPATH" "NVM_BIN"))
+  :config
+  (exec-path-from-shell-initialize)
+  ;; Optional: Print paths for debugging
+  (message "exec-path: %s" exec-path)
+  (message "PATH: %s" (getenv "PATH")))
