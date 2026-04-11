@@ -220,3 +220,20 @@
   ;; Optional: Print paths for debugging
   (message "exec-path: %s" exec-path)
   (message "PATH: %s" (getenv "PATH")))
+
+(use-package ace-window
+  :ensure t
+  :bind (("M-o" . ace-window)
+         ("M-0" . ace-delete-window)    ;; Delete window
+         ("M-=" . ace-window-display-mode))  ;; Show window numbers in mode-line
+
+  :custom
+  ;; Window label appearance
+  (aw-scope 'frame)                      ;; Scope: 'frame, 'visible, 'global
+  (aw-background nil)                    ;; Don't dim other windows
+  (aw-dispatch-always t)                 ;; Always show action prompt
+
+  :config
+  ;; Use home row keys for faster access (if you have a keyboard with good layout)
+  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l ?\;)))
+
