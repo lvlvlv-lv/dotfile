@@ -237,3 +237,10 @@
   ;; Use home row keys for faster access (if you have a keyboard with good layout)
   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l ?\;)))
 
+(use-package multiple-cursors
+  :ensure t
+  :bind (("C-S-c C-S-c" . mc/edit-lines)               ; Edit each line in a region
+         ("C->" . mc/mark-next-like-this)              ; Mark next identical occurrence
+         ("C-<" . mc/mark-previous-like-this)          ; Mark previous identical occurrence
+         ("C-c C-<" . mc/mark-all-like-this)           ; Mark all identical occurrences
+         ("C-S-<mouse-1>" . mc/add-cursor-on-click)))  ; Add cursor by clicking
