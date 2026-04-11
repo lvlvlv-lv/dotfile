@@ -66,6 +66,13 @@
 ;;Useful for configuring built-in emacs features.
 (use-package emacs
   :ensure nil
+  :bind
+  (("s-e" . open-emacs-config)
+   ;; 替代ctrl+alt+space
+   ("C-s-SPC" . mark-sexp)
+   ;; M-&打开Async shell command, M-*打开Compile command
+   ("M-*" . compile)
+   ("C-c w" . whitespace-mode))
   :config
   (setq ring-bell-function #'ignore)
   ;; 禁用启动画面
@@ -82,32 +89,42 @@
   (setq create-lockfiles nil)
   ;; 启动时最大化窗口
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
-
   ;; 设置字体名称和大小
   (set-face-attribute 'default nil :family "Monospace" :height 240)
-
-  ;; 加载customs.el文件的配置
-  ;; (setq custom-file (expand-file-name "customs.el" user-emacs-directory))
-  ;; (add-hook 'elpaca-after-init-hook (lambda () (load custom-file 'noerror)))
-
   ;; Enable line numbers globally for all buffers
   (global-display-line-numbers-mode)
-
   ;; Set the line number type to relative
   (setq display-line-numbers-type 'relative)
-
+  ;; 启用空白符显示模式
+  (setq-default indicate-empty-lines t)      ;; 显示空行
+  (setq-default show-trailing-whitespace t)  ;; 红色显示行尾空格
+  ;; 显示更多空白符类型
+  (setq whitespace-style '(face           ; 使用颜色高亮
+                           trailing       ; 行尾空格
+                           tabs           ; 制表符
+                           spaces         ; 普通空格
+                           space-mark     ; 空格标记
+                           tab-mark       ; 制表符标记
+                           newline-mark   ; 换行符标记
+                           empty          ; 空行
+                           indentation    ; 缩进问题
+                           space-before-tab
+                           space-after-tab))
+  ;; 设置显示符号
+  (setq whitespace-display-mappings
+        '((space-mark   ?\    [?\u00B7] [?.])      ; 空格显示为中点
+          (tab-mark     ?\t   [?\u00BB ?\t] [?\\]) ; 制表符显示为 »
+          (newline-mark ?\n   [?\u00A4 ?\n])))     ; 换行符显示为货币符号
+  (setq-default tab-width 4)
   ;; 定义打开配置文件的函数
   (defun open-emacs-config ()
     "Open Emacs configuration file."
     (interactive)
     (find-file "~/.emacs.d/init.el"))
-
-  :bind
-  (("s-e" . open-emacs-config)
-   ;; 替代ctrl+alt+space
-   ("C-s-SPC" . mark-sexp)
-   ;; M-&打开Async shell command, M-*打开Compile command
-   ("M-*" . compile)))
+  ;; 加载customs.el文件的配置
+  ;; (setq custom-file (expand-file-name "customs.el" user-emacs-directory))
+  ;; (add-hook 'elpaca-after-init-hook (lambda () (load custom-file 'noerror)))
+  )
 
 ;; 主题
 (use-package gruber-darker-theme
