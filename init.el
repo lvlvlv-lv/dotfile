@@ -244,3 +244,21 @@
          ("C-<" . mc/mark-previous-like-this)          ; Mark previous identical occurrence
          ("C-c C-<" . mc/mark-all-like-this)           ; Mark all identical occurrences
          ("C-S-<mouse-1>" . mc/add-cursor-on-click)))  ; Add cursor by clicking
+
+(use-package gt
+  :ensure t
+  :bind (("C-c t" . gt-translate))
+  :config
+  ;; 1. 基础语言设置
+  (setq gt-langs '(en zh))
+  ;; 2. 国内用户建议配置（加快访问速度）
+  ;; (setq gt-google-host "https://translate.google.cn")
+  ;; 3. 代理配置（按需取消注释）
+  (setq gt-http-proxy "http://127.0.0.1:6984")
+  ;; 4. GT v3 新语法：使用列表形式，通过 :if 条件判断
+  (setq gt-default-translator
+        (gt-translator
+         :taker (list (gt-taker :pick 'region :if 'selection)   ; 有选中区域时翻译区域
+                      (gt-taker :text 'word))                    ; 否则翻译当前单词
+         :engines (list (gt-google-engine))
+         :render (gt-buffer-render))))
