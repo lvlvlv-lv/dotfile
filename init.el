@@ -3,9 +3,6 @@
 (setenv "https_proxy" "http://127.0.0.1:6984")
 (setenv "all_proxy" "socks5://127.0.0.1:6984")
 
-;; (setenv "GIT_SSH" "C:/Windows/System32/OpenSSH/ssh.exe")
-;; (setenv "SSH_ASKPASS" "")
-
 ;; 下载elpaca
 (defvar elpaca-installer-version 0.12)
 (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
