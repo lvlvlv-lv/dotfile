@@ -189,7 +189,8 @@
    ("C-c g" . counsel-git))
   :config
   (counsel-mode 1)
-  (setq counsel-fzf-cmd "fd --type f --hidden --follow --exclude .git --color never '%s'"))
+  ;; (setq counsel-fzf-cmd "fd --type f --hidden --follow --exclude .git --color never '%s'")
+  )
 
 (use-package projectile
   :ensure t
@@ -263,6 +264,7 @@
                       (gt-taker :text 'word))                    ; 否则翻译当前单词
          :engines (list (gt-google-engine))
          :render (gt-buffer-render))))
+
 (use-package cmake-mode
   :ensure t
   :mode (("CMakeLists\\.txt\\'" . cmake-mode)
@@ -271,6 +273,14 @@
                         (setq indent-tabs-mode nil)))
   :config
   (message "CMake mode loaded"))
+
+(use-package highlight-symbol
+  :ensure t
+  :bind (("<f8>" . highlight-symbol)
+         ("<f9>" . highlight-symbol-remove-all))
+  :config
+  (setq highlight-symbol-idle-delay 0.3))
+
 ;; lsp
 (use-package lsp-mode
   :ensure t                           ;; 确保安装
