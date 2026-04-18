@@ -150,22 +150,6 @@
   :ensure t
   :after transient  ; 确保在 transient 之后加载
   :bind ("C-x g" . magit-status))
-
-;; lsp
-(use-package lsp-mode
-  :ensure t                           ;; 确保安装
-  :init
-  ;; 设置 lsp-mode 相关命令的前缀键，例如 'C-c l' 后面可以接 'r' 来执行重命名
-  (setq lsp-keymap-prefix "C-c l")
-
-  :hook
-  (;; 在以下编程语言的主模式下自动启动 lsp-mode
-   (c-mode . lsp-deferred))
-  :commands (lsp lsp-deferred)        ;; 延迟加载，提升启动速度
-  :config
-  ;; 可选：集成 which-key，在你输入前缀键后显示可用的命令
-  (lsp-enable-which-key-integration t))
-
 (use-package ivy
   :ensure t
   :hook (after-init . ivy-mode)  ; 启动自动开启
@@ -287,3 +271,17 @@
                         (setq indent-tabs-mode nil)))
   :config
   (message "CMake mode loaded"))
+;; lsp
+(use-package lsp-mode
+  :ensure t                           ;; 确保安装
+  :init
+  ;; 设置 lsp-mode 相关命令的前缀键，例如 'C-c l' 后面可以接 'r' 来执行重命名
+  (setq lsp-keymap-prefix "C-c l")
+  ;; (setq lsp-enable-xref nil)  ; 禁用 LSP 的跳转，继续用 etags
+  :hook
+  (;; 在以下编程语言的主模式下自动启动 lsp-mode
+   (c-mode . lsp-deferred))
+  :commands (lsp lsp-deferred)        ;; 延迟加载，提升启动速度
+  :config
+  ;; 可选：集成 which-key，在你输入前缀键后显示可用的命令
+  (lsp-enable-which-key-integration t))
