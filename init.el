@@ -279,3 +279,11 @@
                       (gt-taker :text 'word))                    ; 否则翻译当前单词
          :engines (list (gt-google-engine))
          :render (gt-buffer-render))))
+(use-package cmake-mode
+  :ensure t
+  :mode (("CMakeLists\\.txt\\'" . cmake-mode)
+         ("\\.cmake\\'" . cmake-mode))
+  :hook (cmake-mode . (lambda ()
+                        (setq indent-tabs-mode nil)))
+  :config
+  (message "CMake mode loaded"))
