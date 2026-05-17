@@ -82,3 +82,7 @@
       doom-variable-pitch-font (font-spec :family "sans-serif" :size 24)
       ;; big-font 用于开启“大字号模式”（如演讲、分享屏幕时）
       doom-big-font (font-spec :family "monospace" :size 24))
+
+(setq native-comp-async-report-warnings-errors 'silent)
+(setq warning-minimum-level :error)
+
