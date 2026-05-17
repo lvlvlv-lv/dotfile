@@ -89,3 +89,24 @@
 (after! ispell
   (setq ispell-alternate-dictionary "/usr/share/dict/words"))
 
+(use-package! eaf
+  :custom
+  (eaf-apps-to-install '(browser
+                         pdf-viewer
+                         markdown-previewer
+                         image-viewer
+                         video-player
+                         org-previewer
+                         system-monitor))
+  :config
+  (eaf-setq eaf-proxy-type "socks5")
+  (eaf-setq eaf-proxy-host "127.0.0.1")
+  (eaf-setq eaf-proxy-port "6984")
+  (setq eaf-byte-compile-apps t)
+  (require 'eaf-browser)
+  (require 'eaf-pdf-viewer)
+  (require 'eaf-markdown-previewer)
+  (require 'eaf-image-viewer)
+  (require 'eaf-video-player)
+  (require 'eaf-org-previewer)
+  (require 'eaf-system-monitor))

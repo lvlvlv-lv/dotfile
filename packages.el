@@ -55,3 +55,7 @@
 
 (package! gruber-darker-theme)
 
+(package! eaf
+  :recipe (:host github
+   :repo "emacs-eaf/emacs-application-framework"
+   :files ("eaf.el" "eaf.py" "extension" "core" "img" "sync-eaf-resources.py" "applications.json" "app")))
