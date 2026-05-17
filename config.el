@@ -96,7 +96,6 @@
                          markdown-previewer
                          image-viewer
                          video-player
-                         org-previewer
                          system-monitor))
   :config
   (eaf-setq eaf-proxy-type "socks5")
@@ -108,5 +107,9 @@
   (require 'eaf-markdown-previewer)
   (require 'eaf-image-viewer)
   (require 'eaf-video-player)
-  (require 'eaf-org-previewer)
   (require 'eaf-system-monitor))
+
+(after! org
+  (setq org-hide-emphasis-markers t)
+  (setq org-startup-with-inline-images t))
+
