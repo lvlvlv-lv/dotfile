@@ -86,3 +86,6 @@
 (setq native-comp-async-report-warnings-errors 'silent)
 (setq warning-minimum-level :error)
 
+(after! ispell
+  (setq ispell-alternate-dictionary "/usr/share/dict/words"))
+
