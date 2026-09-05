@@ -93,7 +93,6 @@
   :custom
   (eaf-apps-to-install '(browser
                          pdf-viewer
-                         markdown-previewer
                          image-viewer
                          video-player
                          system-monitor))
@@ -104,7 +103,6 @@
   (setq eaf-byte-compile-apps t)
   (require 'eaf-browser)
   (require 'eaf-pdf-viewer)
-  (require 'eaf-markdown-previewer)
   (require 'eaf-image-viewer)
   (require 'eaf-video-player)
   (require 'eaf-system-monitor))
