@@ -100,7 +100,7 @@
   :config
   (eaf-setq eaf-proxy-type "socks5")
   (eaf-setq eaf-proxy-host "127.0.0.1")
-  (eaf-setq eaf-proxy-port "6984")
+  (eaf-setq eaf-proxy-port "7892")
   (setq eaf-byte-compile-apps t)
   (require 'eaf-browser)
   (require 'eaf-pdf-viewer)
