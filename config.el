@@ -111,3 +111,14 @@
   (setq org-hide-emphasis-markers t)
   (setq org-startup-with-inline-images t))
 
+(use-package! gtags-mode
+  :defer t
+  :hook (((prog-mode) . gtags-mode)) ; 可根据需要改成你常用的语言模式
+  :config
+  ;; 设置环境变量，使 gtags 在后台调用 universal-ctags（通常标签名为 new-ctags 或 universal-ctags）
+  (setenv "GTAGSLABEL" "new-ctags")
+
+  ;; 如果需要传递额外的生成参数，也可以在此调整
+  ;; (setq gtags-mode-update-args "--gtagslabel=new-ctags")
+  )
+
