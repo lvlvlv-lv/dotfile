@@ -122,3 +122,12 @@
   ;; (setq gtags-mode-update-args "--gtagslabel=new-ctags")
   )
 
+(use-package! fzf
+  :defer t
+  :config
+  (setq fzf/executable "fzf"
+        fzf/args (concat "-m --ansi --layout=reverse --height=40% "
+                         "--preview 'bat --style=numbers --color=always --line-range :100 {}' "
+                         "--bind 'ctrl-d:preview-page-down,ctrl-u:preview-page-up,"
+                         "ctrl-j:preview-down,ctrl-k:preview-up,"
+                         "ctrl-v:transform-query(echo -n {q}; xclip -o -selection clipboard)'")))
